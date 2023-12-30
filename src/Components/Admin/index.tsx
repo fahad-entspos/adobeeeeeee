@@ -12,33 +12,41 @@ import React, { useEffect, useState } from 'react'
 
 function Admin() {
   useEffect(() => {
-    const dataPolar = {
-      type: 'polarArea',
-      data: {
+    const initializeChart = async () => {
+      const { Chart } = await import('tw-elements');
 
-        datasets: [
-          {
-            data: [2112, 2343, 2545, 3423, 2365, 1985, 987],
-            backgroundColor: [
-              'rgba(63, 81, 181, 0.5)',
-              'rgba(77, 182, 172, 0.5)',
-              'rgba(66, 133, 244, 0.5)',
-              'rgba(156, 39, 176, 0.5)',
-              'rgba(233, 30, 99, 0.5)',
-              'rgba(66, 73, 244, 0.4)',
-              'rgba(66, 133, 244, 0.2)',
-            ],
-          },
-        ],
-      },
+      const dataPolar = {
+        type: 'polarArea',
+        data: {
+          datasets: [
+            {
+              data: [2112, 2343, 2545, 3423, 2365, 1985, 987],
+              backgroundColor: [
+                'rgba(63, 81, 181, 0.5)',
+                'rgba(77, 182, 172, 0.5)',
+                'rgba(66, 133, 244, 0.5)',
+                'rgba(156, 39, 176, 0.5)',
+                'rgba(233, 30, 99, 0.5)',
+                'rgba(66, 73, 244, 0.4)',
+                'rgba(66, 133, 244, 0.2)',
+              ],
+            },
+          ],
+        },
+      };
+
+      const chartElement = document.getElementById('polar-area-chart') as HTMLCanvasElement;
+
+      if (chartElement) {
+        new Chart(chartElement, dataPolar);
+      }
     };
 
-    new Chart(document.getElementById('polar-area-chart'), dataPolar);
-  }, [])
+    initializeChart();
+  }, []);
   useEffect(() => {
-
-
-    {
+    const initializeChart = async () => {
+      const { Chart } = await import('tw-elements');
 
       const dataBarCustomTooltip = {
         type: "bar",
@@ -69,16 +77,15 @@ function Admin() {
         },
       };
 
-      new Chart(
-        document.getElementById("bar-chart-custom-tooltip"),
-        dataBarCustomTooltip,
-        optionsBarCustomTooltip
-      );
+      const chartElement = document.getElementById("bar-chart-custom-tooltip") as HTMLCanvasElement;
 
+      if (chartElement) {
+        new Chart(chartElement, dataBarCustomTooltip, optionsBarCustomTooltip);
+      }
+    };
 
-    }
-
-  }, [])
+    initializeChart();
+  }, []);
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -212,13 +219,12 @@ function Admin() {
 
           <div className="mx-auto w-[300px]  md:w-2/5 overflow-hidden ">
             <h1 className="font-bold text-xl">Calls By Location:</h1>
-            <canvas className=' mt-' id="bar-chart-custom-tooltip"></canvas>
-
+            <canvas className="mt-" id="bar-chart-custom-tooltip"></canvas>
           </div>
           <div className="mx-auto  w-[200px] md:w-[25%] overflow-hidden ">
             <h1 className="font-bold text-xl mt-16">Calls By Call Type:</h1>
 
-            <canvas className=' mt-6' id="polar-area-chart"></canvas>
+             <canvas className="mt-6" id="polar-area-chart"></canvas>;
           </div>
 
 
